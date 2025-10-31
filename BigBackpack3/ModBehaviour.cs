@@ -24,11 +24,14 @@ namespace BigBackpack3
             // 背包排序
             LevelManager.Instance.MainCharacter.CharacterItem.Inventory.onInventorySorted -= OnInventorySorted;
             LevelManager.Instance.MainCharacter.CharacterItem.Inventory.onInventorySorted += OnInventorySorted;
+            // 背包容量变化
+            LevelManager.Instance.MainCharacter.CharacterItem.Inventory.onCapacityChanged -= OnCapacityChanged;
+            LevelManager.Instance.MainCharacter.CharacterItem.Inventory.onCapacityChanged += OnCapacityChanged;
             // 先手动触发一次
             OnContentChanged(LevelManager.Instance.MainCharacter.CharacterItem.Inventory, 0);
         }
 
-        void OnContentChanged(Inventory inventory, int index)
+        void OnCapacityChanged(Inventory inventory)
         {
             // 如果空闲格子小于10个 扩容20个格子
             if (inventory.Content.Count > inventory.Capacity - 10)
@@ -43,6 +46,11 @@ namespace BigBackpack3
             LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("MaxWeight",
                 new Modifier(ModifierType.Add, inventory.Capacity * 5 - mainCharacterMaxWeight,
                     LevelManager.Instance.MainCharacter.CharacterItem));
+        }
+
+        void OnContentChanged(Inventory inventory, int index)
+        {
+            OnCapacityChanged(inventory);
         }
 
         void OnInventorySorted(Inventory inventory)
