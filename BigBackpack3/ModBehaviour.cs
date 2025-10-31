@@ -41,7 +41,7 @@ namespace BigBackpack3
             // 更新负重，每格5kg
             var mainCharacterMaxWeight = LevelManager.Instance.MainCharacter.MaxWeight;
             LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("MaxWeight",
-                new Modifier(ModifierType.Add, inventory.Content.Count * 5 - mainCharacterMaxWeight,
+                new Modifier(ModifierType.Add, inventory.Capacity * 5 - mainCharacterMaxWeight,
                     LevelManager.Instance.MainCharacter.CharacterItem));
         }
 
@@ -60,7 +60,7 @@ namespace BigBackpack3
             // 更新负重，每格5kg
             var mainCharacterMaxWeight = LevelManager.Instance.MainCharacter.MaxWeight;
             LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("MaxWeight",
-                new Modifier(ModifierType.Add, inventory.Content.Count * 5 - mainCharacterMaxWeight,
+                new Modifier(ModifierType.Add, inventory.Capacity * 5 - mainCharacterMaxWeight,
                     LevelManager.Instance.MainCharacter.CharacterItem));
         }
     }
