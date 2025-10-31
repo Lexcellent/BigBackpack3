@@ -33,10 +33,16 @@ namespace BigBackpack3
             // 如果空闲格子小于10个 扩容20个格子
             if (inventory.Content.Count > inventory.Capacity - 10)
             {
+                var addCount = 20;
                 LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("InventoryCapacity",
-                    new Modifier(ModifierType.Add, 20, inventory));
-                inventory.SetCapacity(inventory.Content.Count + 20);
+                    new Modifier(ModifierType.Add, addCount, LevelManager.Instance.MainCharacter.CharacterItem));
+                inventory.SetCapacity(inventory.Content.Count + addCount);
             }
+            // 更新负重，每格5kg
+            var mainCharacterMaxWeight = LevelManager.Instance.MainCharacter.MaxWeight;
+            LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("MaxWeight",
+                new Modifier(ModifierType.Add, inventory.Content.Count * 5 - mainCharacterMaxWeight,
+                    LevelManager.Instance.MainCharacter.CharacterItem));
         }
 
         void OnInventorySorted(Inventory inventory)
@@ -45,10 +51,17 @@ namespace BigBackpack3
             // 排序后物品个数只会减少，因为物品个数也计算了空白格，只考虑缩容，防止背包过大加载时间长
             if (inventory.Content.Count < inventory.Capacity - 30)
             {
+                var addCount = 20;
                 LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("InventoryCapacity",
-                    new Modifier(ModifierType.Add, -(inventory.Capacity - (inventory.Content.Count + 20)), inventory));
-                inventory.SetCapacity(inventory.Content.Count + 20);
+                    new Modifier(ModifierType.Add, -(inventory.Capacity - (inventory.Content.Count + addCount)),
+                        inventory));
+                inventory.SetCapacity(inventory.Content.Count + addCount);
             }
+            // 更新负重，每格5kg
+            var mainCharacterMaxWeight = LevelManager.Instance.MainCharacter.MaxWeight;
+            LevelManager.Instance.MainCharacter.CharacterItem.AddModifier("MaxWeight",
+                new Modifier(ModifierType.Add, inventory.Content.Count * 5 - mainCharacterMaxWeight,
+                    LevelManager.Instance.MainCharacter.CharacterItem));
         }
     }
 }
